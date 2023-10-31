@@ -33,6 +33,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// If you're displaying the success or error messages, you can do so here.
+// Output success and error messages
+if (!empty($success_message)) {
+    echo "Success: " . $success_message;
+}
+
+if (!empty($error_message)) {
+    echo "Error: " . $error_message;
+}
 
 ?>
