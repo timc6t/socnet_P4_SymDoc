@@ -1,12 +1,14 @@
 <?php
 // Database configuration, fill up with my own db host user
-$db_host = "your_db_host";
-$db_name = "your_db_name";
-$db_user = "your_db_user";
-$db_pass = "your_db_password";
+define('DB_SERVER','localhost');
+define('DB_USERNAME','');
+define('DB_PASSWORD','password');
+define('DB_NAME','social_network');
 
 // Mail server configuration
-$mail_host = "your_mail_host";
-$mail_user = "your_mail_user";
-$mail_pass = "your_mail_password";
+$link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+if ($link === false) {
+    die("ERROR: Could not connect". mysqli_connect_error());
+}
 ?>
