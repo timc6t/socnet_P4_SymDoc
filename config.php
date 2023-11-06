@@ -1,8 +1,8 @@
 <?php
 // Database configuration, fill up with my own db host user
 define('DB_SERVER','localhost');
-define('DB_USERNAME','');
-define('DB_PASSWORD','password');
+define('DB_USERNAME','timc6t');
+define('DB_PASSWORD','jM6(S)HYwaFWbXb[');
 define('DB_NAME','social_network');
 
 // Mail server configuration
