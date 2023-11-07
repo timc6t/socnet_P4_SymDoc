@@ -60,6 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
 
     <p>Sign up <a href="register.php">here</a>!</p>
+    <p><a href="pwd_recovery.php">Forgot your password?</a></p>
+    <!--Password recovery needs to be done-->
 
     <?php
     if (!empty($error_message)){
