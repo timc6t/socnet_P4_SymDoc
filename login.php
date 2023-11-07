@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 mysqli_stmt_bind_result($stmt, $user_id, $hashed_password);
                 
                 if(mysqli_stmt_fetch($stmt)) {
-                    if (password_verify($password, $user_password)) {
+                    if (password_verify($password, $hashed_password)) {
                         $_SESSION["user_id"] = $user_id;
                         header("Location: dashboard.php");
                             exit;

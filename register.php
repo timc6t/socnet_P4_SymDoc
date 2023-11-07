@@ -18,54 +18,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $param_username = trim($_POST["username"]);
 
-            if (mysqli_stmt_num_rows($stmt) == 1) {
-                $username_err = "This username already exists.";
+            if (mysqli_stmt_execute($stmt)) {
+                mysqli_stmt_store_result($stmt);
+
+                if (mysqli_stmt_num_rows($stmt) == 1) {
+                    $username_err = "This username already exists.";
+                } else {
+                    $username = trim($_POST["username"]);
+                }
             } else {
-                $username = trim($_POST["username"]);
+                echo "Something went wrong. Please try again.";
             }
-        } else {
-            echo "Something went wrong. Please try again.";
+            mysqli_stmt_close($stmt);
         }
-
-        mysqli_stmt_close($stmt);
     }
-}
 
-if (isset($_POST["email"])) {
-    $email_input = trim($_POST["email"]);
-    if (empty($email_input)) {
-        $email_err = "Please enter an email.";
-    } else {
-        $email = $email_input;
-    }
-}
-
-if (isset($_POST["password"])) {
-    $password_input = trim($_POST["password"]);
-    if (empty($password_input)) {
-        $password_err = "Please enter a password.";
-    } elseif(strlen($password_input) < 6) {
-        $password_err = "Password must have at least 6 characters.";
-    } else {
-        $password = $password_input;
-    }
-}
-
-if (empty($username_err) && empty($password_err)) {
-    $sql = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
-
-    if($stmt = mysqli_prepare($link, $sql)) {
-        mysqli_stmt_bind_param($stmt,"sss", $param_username, $param_password, $param_email);
-        $param_username = $username;
-        $param_password = password_hash($password, PASSWORD_DEFAULT);
-        $param_email = $email;
-
-        if (mysqli_stmt_execute($stmt)) {
-            header("Location: login.php");
+    if (isset($_POST["email"])) {
+        $email_input = trim($_POST["email"]);
+        if (empty($email_input)) {
+            $email_err = "Please enter an email.";
         } else {
-            echo "Something went wrong. Please try again later.";
+            $email = $email_input;
         }
-        mysqli_stmt_close($stmt);
+    }
+
+    if (isset($_POST["password"])) {
+        $password_input = trim($_POST["password"]);
+        if (empty($password_input)) {
+            $password_err = "Please enter a password.";
+        } elseif(strlen($password_input) < 6) {
+            $password_err = "Password must have at least 6 characters.";
+        } else {
+            $password = $password_input;
+        }
+    }
+
+    if (empty($username_err) && empty($password_err) && empty($email_err)) {
+        $sql = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
+
+        if($stmt = mysqli_prepare($link, $sql)) {
+            mysqli_stmt_bind_param($stmt,"sss", $param_username, $param_password, $param_email);
+            $param_username = $username;
+            $param_password = password_hash($password, PASSWORD_DEFAULT);
+            $param_email = $email;
+
+            if (mysqli_stmt_execute($stmt)) {
+                header("Location: register_success.php");
+                exit;
+            } else {
+                echo "Something went wrong. Please try again later.";
+            }
+            mysqli_stmt_close($stmt);
+        }
     }
 }
 ?>
