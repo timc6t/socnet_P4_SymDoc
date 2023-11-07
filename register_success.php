@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Successful registration!</title>
+    <style>
+        
+    </style>
 </head>
 <body>
     <h2>Success!</h2>
