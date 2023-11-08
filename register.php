@@ -1,5 +1,11 @@
 <?php
 require_once "config.php";
+require dirname(__FILE__)."/../vendor/autoload.php";
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
 session_start();
 
 $username = $password = "";
@@ -63,8 +69,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $param_email = $email;
 
             if (mysqli_stmt_execute($stmt)) {
-                header("Location: register_success.php");
-                exit;
+
+                $mail = new PHPMailer();
+                $mail->isSMTP();
+                $mail->Host = "smtp.gmail.com";
+                $mail->SMTPAuth = true;
+                $mail->Username = "timtester74@gmail.com";
+                $mail->Password = "kwpf vhea voyu gxto";
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587; 
+                $mail->setFrom("noreply@readerswriters.org","Readers and Writers");
+                $mail->addAddress($param_email, $param_username);
+                $mail->isHTML(true);
+                $mail->Subject = "Confirmation";
+                $mail->Body = "Thank you for registering into our social media. We hope you enjoy your stay.";
+
+                if ($mail->send()) {
+                    header("Location: register_success.php");
+                    exit;
+                } else {
+                    echo "Email could not be sent.";
+                }
             } else {
                 echo "Something went wrong. Please try again later.";
             }
