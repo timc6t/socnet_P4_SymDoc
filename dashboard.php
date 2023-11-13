@@ -10,38 +10,55 @@ if (!isset($_SESSION["user_id"])) {
 $user_id = $_SESSION["user_id"];
 $tags = [];
 
-$sql = "SELECT username, profile_image FROM users WHERE user_id = ?";
-if ($stmt = mysqli_prepare($link, $sql)) {
-    mysqli_stmt_bind_param($stmt,"s", $user_id);
+// Fetching user data
+$sql_user = "SELECT username, profile_image FROM users WHERE user_id = ?";
+if ($stmt_user = mysqli_prepare($link, $sql_user)) {
+    mysqli_stmt_bind_param($stmt_user,"s", $user_id);
     
-    if (mysqli_stmt_execute($stmt)) {
-        mysqli_stmt_store_result($stmt);
-        mysqli_stmt_bind_result($stmt, $username, $profile_image);
-        mysqli_stmt_fetch($stmt);
-        mysqli_stmt_close($stmt);
+    if (mysqli_stmt_execute($stmt_user)) {
+        mysqli_stmt_store_result($stmt_user);
+        mysqli_stmt_bind_result($stmt_user, $username, $profile_image);
+        mysqli_stmt_fetch($stmt_user);
+        mysqli_stmt_close($stmt_user);
     } else {
         echo "Error fetching user data: " . mysqli_error($link);
+        exit; // Add exit here to stop further execution
     }
 } else {
-    mysqli_error($link);
+    echo "Error preparing user query: " . mysqli_error($link);
+    exit; // Add exit here to stop further execution
 }
 
-$sql = "SELECT user_id, title, content, is_public, created_at FROM texts ORDER BY  created_at DESC";
-$result = mysqli_query($link, $sql);
+// Fetching posts from users you follow and your own
+$sql_posts = "SELECT u.username AS post_user, t.title, t.content, t.created_at
+              FROM texts t
+              INNER JOIN users u ON t.user_id = u.user_id
+              WHERE t.user_id = ? OR t.user_id IN (SELECT following_id FROM follows WHERE follower_id = ?)
+              ORDER BY t.created_at DESC";
 
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $post_user = $row["username"];
-        $post_title = $row["title"];
-        $post_content = $row["content"];
-        $post_creation = $row["created_at"];
+if ($stmt_posts = mysqli_prepare($link, $sql_posts)) {
+    mysqli_stmt_bind_param($stmt_posts,"ss", $user_id, $user_id);
 
-        echo "<p><div class='username_post'>$post_user</div></p><br> <p><strong>$post_title</strong></p><br> ($post_creation)";
-        ;
+    if (mysqli_stmt_execute($stmt_posts)) {
+        $result_posts = mysqli_stmt_get_result($stmt_posts);
+
+        while ($row = mysqli_fetch_assoc($result_posts)) {
+            $post_user = $row["post_user"];
+            $post_title = $row["title"];
+            $post_content = $row["content"];
+            $post_creation = $row["created_at"];
+
+
+        }
+
+        mysqli_free_result($result_posts);
+    } else {
+        echo "Error fetching posts: " . mysqli_error($link);
     }
-    mysqli_free_result($result);
+
+    mysqli_stmt_close($stmt_posts);
 } else {
-    echo "Error fetching posts: " . mysqli_error($link);
+    echo "Error preparing posts query: " . mysqli_error($link);
 }
 
 mysqli_close($link);
@@ -95,5 +112,9 @@ mysqli_close($link);
             <input type="submit" value="Post">
         </div>
     </form>
+    <br />
+    <p>
+        <?php echo "<p><div class='username_post'><a href='profile.php?username=$post_user</a></div><p><br> <p><strong>$post_title</strong></p><br> ($post_creation)"; ?>
+    </p>
 </body>
 </html>

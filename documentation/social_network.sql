@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2023 a las 20:33:16
+-- Tiempo de generación: 13-11-2023 a las 20:27:02
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -93,11 +93,17 @@ CREATE TABLE `texts` (
   `text_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL,
   `content` text NOT NULL,
   `is_public` tinyint(1) DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `texts`
+--
+
+INSERT INTO `texts` (`text_id`, `user_id`, `title`, `content`, `is_public`, `created_at`) VALUES
+(1, 523, 'buh2', 'post', 1, '2023-11-13 19:05:09');
 
 -- --------------------------------------------------------
 
@@ -128,6 +134,13 @@ CREATE TABLE `users` (
   `is_activated` tinyint(1) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `activation_key`, `profile_image`, `is_activated`, `created_at`) VALUES
+(523, 'timc6t', 'tim.casiano7@gmail.com', '$2y$10$qQaUAmfGMm6dIZdra7.qF.YyHaWGDTOhFdwJgJQ80K2Zpqj5wPs.C', NULL, '', 0, '2023-11-08 18:57:17');
 
 --
 -- Índices para tablas volcadas
@@ -215,7 +228,7 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT de la tabla `texts`
 --
 ALTER TABLE `texts`
-  MODIFY `text_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `text_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `text_tags`
@@ -227,7 +240,7 @@ ALTER TABLE `text_tags`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=524;
 
 --
 -- Restricciones para tablas volcadas
