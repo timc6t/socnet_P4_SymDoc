@@ -55,10 +55,16 @@ mysqli_close($link);
 </head>
 <body>
     <h2>Welcome to Rs/Ws</h2>
-    <p>Hello, <?php echo $username; ?>. Create your own posts here!</p>
+    <p>Hello, <b><?php echo $username; ?></b>!</p>
     <?php if ($profile_image) : ?>
         <img src="<?php echo $profile_image; ?>" alt="Profile picture">
-    <?php endif; ?>
+    <?php endif; ?><br>
+    <div id="navbar">
+        <p><a href="user_posts.php">My texts</a></p> <!-- TO DO: user_posts.php -->
+        <p><a href="profile.php">My profile</a></p>
+        <p><a href="logout.php">Logout</a></p>
+    </div>
+    <p>Create your own posts here!</p>
 
     <form method="POST" action="upload_text.php">
         <div>
@@ -89,7 +95,5 @@ mysqli_close($link);
             <input type="submit" value="Post">
         </div>
     </form>
-    
-    <p><a href="logout.php">Logout</a></p>
 </body>
 </html>
