@@ -8,6 +8,7 @@ if (!isset($_SESSION["user_id"])) {
 }
 
 $user_id = $_SESSION["user_id"];
+$tags = [];
 
 $sql = "SELECT username, profile_image FROM users WHERE user_id = ?";
 if ($stmt = mysqli_prepare($link, $sql)) {
@@ -25,7 +26,7 @@ if ($stmt = mysqli_prepare($link, $sql)) {
     mysqli_error($link);
 }
 
-$sql = "SELECT user_id, title, description, content, is_public, created_at FROM texts ORDER BY  created_at DESC";
+$sql = "SELECT user_id, title, content, is_public, created_at FROM texts ORDER BY  created_at DESC";
 $result = mysqli_query($link, $sql);
 
 if ($result) {
@@ -35,7 +36,8 @@ if ($result) {
         $post_content = $row["content"];
         $post_creation = $row["created_at"];
 
-        echo '<p><div class="username_post">$post_user</div></p><br> <p><strong>$post_title</strong></p><br> ($post_creation)';
+        echo "<p><div class='username_post'>$post_user</div></p><br> <p><strong>$post_title</strong></p><br> ($post_creation)";
+        ;
     }
     mysqli_free_result($result);
 } else {
@@ -52,16 +54,40 @@ mysqli_close($link);
     <title>Dashboard</title>
 </head>
 <body>
-    <h2>Welcome to Your Dashboard</h2>
-    <p>Hello, <?php echo $username; ?></p>
+    <h2>Welcome to Rs/Ws</h2>
+    <p>Hello, <?php echo $username; ?>. Create your own posts here!</p>
     <?php if ($profile_image) : ?>
         <img src="<?php echo $profile_image; ?>" alt="Profile picture">
     <?php endif; ?>
 
     <form method="POST" action="upload_text.php">
-        <lable for="post_content">Create a post:</label>
-        <textarea id="post_content" name="post_content" required></textarea>
-        <input type="submit" value="Post">
+        <div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div><br>
+
+        <div>
+            <label for="content">Post:</label>
+            <textarea name="content" required></textarea>
+        </div><br>
+
+        <div>
+            <label for="is_public">Privacy:</label>
+            <select name="is_public">
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+            </select>
+        </div><br>
+
+        <div>
+            <label>Tags:</label>
+            <input type="text" name="tags" value="<?php echo implode(', ', $tags); ?>"><br>
+            <span>Enter tags separated by commas</span>
+        </div><br>
+
+        <div>
+            <input type="submit" value="Post">
+        </div>
     </form>
     
     <p><a href="logout.php">Logout</a></p>
