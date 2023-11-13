@@ -114,7 +114,7 @@ mysqli_close($link);
     </form>
     <br />
     <p>
-        <?php echo "<p><div class='username_post'><a href='profile.php?username=$post_user</a></div><p><br> <p><strong>$post_title</strong></p><br> ($post_creation)"; ?>
+        <?php echo "<p><div class='username_post'><a href='profile.php?username=$post_user'</a></div></p><br> <p><strong>$post_title</strong></p><br> ($post_creation)"; ?>
     </p>
 </body>
 </html>
