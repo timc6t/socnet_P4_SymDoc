@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sql = "SELECT user_id, password FROM users WHERE username = ? LIMIT 1";
 
-    if ($stmt = mysqli_prepare($conn, $sql)) {
+    if ($stmt = mysqli_prepare($link, $sql)) {
         mysqli_stmt_bind_param($stmt,"s", $username);
 
         if (mysqli_stmt_execute($stmt)) {
