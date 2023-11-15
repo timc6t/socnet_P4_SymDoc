@@ -3,7 +3,7 @@ require_once "config.php";
 session_start();
 
 if (!isset($_SESSION["user_id"])) {
-    header("Location: dashboard.php");
+    header("Location: login.php");
     exit;
 }
 
@@ -88,7 +88,7 @@ $sql_posts = "SELECT u.username AS post_user, t.text_id, t.user_id, t.title, t.c
             </div>
         </form>
     </div>
-    <br />
+    <br>
     <p>
         <?php
             if ($stmt_posts = mysqli_prepare($link, $sql_posts)) {
