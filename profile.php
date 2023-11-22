@@ -11,8 +11,7 @@ if (!isset($_SESSION["user_id"])) {
 }
 
 $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : $_SESSION["user_id"];
-$username = $profile_image = "";
-$profile_username = "";
+$username = $profile_image = $profile_username = "";
 $err = "";
 
 // Retrieve user's profile information
@@ -38,7 +37,8 @@ if ($stmt_profile = mysqli_prepare($link, $sql_profile)) {
 
 // Display follow/unfollow button
 if ($user_id != $_SESSION['user_id']) {
-    $follow_user_id = $_user_id;
+    $follow_user_id = $_GET['user_id'];
+
     if (!isFollowing($link, $_SESSION['user_id'], $follow_user_id)) {
         echo "<form method='POST' action='follow_func.php'>";
         echo "<input type='hidden' name='follow_user_id' value='$follow_user_id'>";
@@ -54,7 +54,27 @@ if ($user_id != $_SESSION['user_id']) {
     }
 }
 
-
+$profile_user_posts = [];
+$sql_user_posts = "SELECT text_id, title, content, created_at
+                   FROM texts
+                   WHERE user_id = ?
+                   ORDER BY created_at DESC";
+        
+if ($stmt_user_posts = mysqli_prepare($link, $sql_user_posts)) {
+    mysqli_stmt_bind_param($stmt_user_posts, "i", $user_id);
+        
+    if (mysqli_stmt_execute($stmt_user_posts)) {
+        $result_user_posts = mysqli_stmt_get_result($stmt_user_posts);
+        $profile_user_posts = mysqli_fetch_all($result_user_posts, MYSQLI_ASSOC);
+        
+                    
+    } else {
+        echo "Error fetching user's posts: " . mysqli_error($link);
+    }
+    mysqli_stmt_close($stmt_user_posts);
+} else {
+    echo "Error preparing your posts' query: " . mysqli_error($link);
+}
 ?>
 
 <!DOCTYPE html>
@@ -86,37 +106,17 @@ if ($user_id != $_SESSION['user_id']) {
 
     <div id="posts">    
         <?php
-            $profile_user_posts = [];
-            $sql_user_posts = "SELECT text_id, title, content, created_at
-                               FROM texts
-                               WHERE user_id = ?
-                               ORDER BY created_at DESC";
-        
-            if ($stmt_user_posts = mysqli_prepare($link, $sql_user_posts)) {
-                mysqli_stmt_bind_param($stmt_user_posts, "i", $user_id);
-        
-                if (mysqli_stmt_execute($stmt_user_posts)) {
-                    $result_user_posts = mysqli_stmt_get_result($stmt_user_posts);
-                    $profile_user_posts = mysqli_fetch_all($result_user_posts, MYSQLI_ASSOC);
-        
-                    foreach ($profile_user_posts as $post) {
-                        $post_id = $post["text_id"];
-                        $post_title = $post["title"];
-                        $post_content = $post["content"];
-                        $post_creation = $post["created_at"];
-        
-                        echo "<div style='border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;'>";
-                        echo "<h4><a href='posts.php?user_id=$user_id&text_id=$post_id'>$post_title</a></h4>";
-                        echo "<p>$post_content</p>";
-                        echo "<p><em>($post_creation)</em></p>";
-                        echo "</div>";
-                    }
-                } else {
-                    echo "Error fetching user's posts: " . mysqli_error($link);
-                }
-                mysqli_stmt_close($stmt_user_posts);
-            } else {
-                echo "Error preparing your posts' query: " . mysqli_error($link);
+            foreach ($profile_user_posts as $post) {
+                $post_id = $post["text_id"];
+                $post_title = $post["title"];
+                $post_content = $post["content"];
+                $post_creation = $post["created_at"];
+
+                echo "<div style='border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;'>";
+                echo "<h4><a href='posts.php?user_id=$user_id&text_id=$post_id'>$post_title</a></h4>";
+                echo "<p>$post_content</p>";
+                echo "<p><em>($post_creation)</em></p>";
+                echo "</div>";
             }
         ?>
     </div>
