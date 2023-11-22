@@ -2,7 +2,6 @@
 
 session_start();
 require_once "config.php";
-//require_once "follow_func.php";
 
 
 if (!isset($_SESSION["user_id"])) {
@@ -54,6 +53,29 @@ if ($user_id != $_SESSION['user_id']) {
     }
 }
 
+/*
+    // Example isFollowing function
+function isFollowing($link, $follower_id, $followed_id) {
+    $sql = "SELECT * FROM follows WHERE follower_id = ? AND followed_id = ?";
+    $stmt = mysqli_prepare($link, $sql);
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "ii", $follower_id, $followed_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+
+        $count = mysqli_stmt_num_rows($stmt);
+
+        mysqli_stmt_close($stmt);
+
+        return $count > 0;
+    }
+
+    return false;
+}
+
+*/
+
 $profile_user_posts = [];
 $sql_user_posts = "SELECT text_id, title, content, created_at
                    FROM texts
@@ -99,6 +121,7 @@ if ($stmt_user_posts = mysqli_prepare($link, $sql_user_posts)) {
         ?>
         <div id="navbar">
             <p><a href="dashboard.php">Dashboard</a></p>
+            <p><a href="search.php">Search</a></p>
             <p><a href="logout.php">Logout</a></p>
         </div>
         <h3>Posts</h3>

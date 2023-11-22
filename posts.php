@@ -94,6 +94,7 @@ if (isset($_GET['user_id']) && isset($_GET['text_id'])) {
     echo "<h1>Posts</h1>";
     echo "<div id='navbar'>";
     echo "<p><a href='dashboard.php'>Dashboard</a></p>";
+    echo "<p><a href='search.php'>Search</a></p>";
     echo "<p><a href='profile.php?user_id=$user_id'>My profile</a></p>";
     echo "<p><a href='logout.php'>Logout</a></p>";
     echo "</div>";
