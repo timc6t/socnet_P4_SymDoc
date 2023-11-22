@@ -49,7 +49,11 @@ if (isset($_GET['user_id']) && isset($_GET['text_id'])) {
     $sql_comments = "SELECT c.comment_id, c.user_id, c.content, c.created_at, u.username
                      FROM comments c
                      INNER JOIN users u ON c.user_id = u.user_id
-                     WHERE c.text_id = ?
+                     WHERE c.text_id = ? AND (c.user_id = ? OR c.user_id IN (
+                        SELECT following_id
+                        FROM follows
+                        WHERE follower_id = ?)
+                     )
                      ORDER BY c.created_at DESC";
 
     function displayComments($text_id, $link) {
@@ -58,7 +62,7 @@ if (isset($_GET['user_id']) && isset($_GET['text_id'])) {
         global $sql_comments;
 
         if ($stmt_comments = mysqli_prepare($link, $sql_comments)) {
-            mysqli_stmt_bind_param($stmt_comments, "s", $text_id);
+            mysqli_stmt_bind_param($stmt_comments, "sss", $text_id, $post_user_id, $post_user_id);
 
             if (mysqli_stmt_execute($stmt_comments)) {
                 $result_comments = mysqli_stmt_get_result($stmt_comments);
@@ -89,7 +93,7 @@ if (isset($_GET['user_id']) && isset($_GET['text_id'])) {
 
     echo "<h1>Posts</h1>";
     echo "<div id='navbar'>";
-    echo "<p><a href='user_posts.php'>My texts</a></p>"; // TO DO: user_posts.php
+    echo "<p><a href='dashboard.php'>Dashboard</a></p>";
     echo "<p><a href='profile.php'>My profile</a></p>";
     echo "<p><a href='logout.php'>Logout</a></p>";
     echo "</div>";
