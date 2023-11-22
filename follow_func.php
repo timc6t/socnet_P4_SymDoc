@@ -1,6 +1,8 @@
 <?php
 require_once "config.php";
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
@@ -69,6 +71,4 @@ function unfollowUser($link, $follower_id, $following_id) {
         mysqli_stmt_close($stmt);
     }
 }
-
-mysqli_close($link);
 ?>

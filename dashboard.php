@@ -55,8 +55,7 @@ $sql_posts = "SELECT u.username AS post_user, t.text_id, t.user_id, t.title, t.c
         <img src="<?php echo $profile_image; ?>" alt="Profile picture">
     <?php endif; ?><br>
     <div id="navbar">
-        <p><a href="user_posts.php">My texts</a></p> <!-- TO DO: user_posts.php -->
-        <p><a href="profile.php">My profile</a></p>
+        <p><a href="profile.php?user_id=<?php echo $user_id; ?>">Profile</a></p>
         <p><a href="logout.php">Logout</a></p>
     </div>
     <p>Create your own posts here!</p>
