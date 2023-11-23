@@ -40,85 +40,81 @@ $sql_posts = "SELECT u.username AS post_user, t.text_id, t.user_id, t.title, t.c
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <style>
-        .post-section {
-            border: 2px solid black;
-            width: 250px;
-        }
-        textarea { resize: vertical; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h2>Welcome to Rs/Ws</h2>
-    <p>Hello, <b><?php echo $username; ?></b>!</p>
-    <?php if ($profile_image) : ?>
-        <img src="<?php echo $profile_image; ?>" alt="Profile picture">
-    <?php endif; ?><br>
-    <div id="navbar">
-        <p><a href="search.php">Search</a></p>
-        <p><a href="profile.php?user_id=<?php echo $user_id; ?>">Profile</a></p>
-        <p><a href="logout.php">Logout</a></p>
-    </div>
-    <p>Create your own posts here!</p>
-
-    <div class=post-section>
-        <form method="POST" action="upload_text.php">
-            <div>
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
-            </div><br>
-            <div>
-                <label for="content">Post:</label>
-                <textarea name="content" maxlength="512" required></textarea>
-            </div><br>
-            <div>
-                <label for="is_public">Privacy:</label>
-                <select name="is_public">
-                    <option value="public">Public</option>
-                    <option value="private">Private</option>
-                </select>
-            </div><br>
-            <div>
-                <label>Tags:</label>
-                <input type="text" name="tags" value="<?php echo implode(', ', $tags); ?>"><br>
-                <span>Enter tags separated by commas</span>
-            </div><br>
-            <div>
-                <input type="submit" value="Post">
-            </div>
-        </form>
-    </div>
-    <br>
-    <p>
-        <?php
-            if ($stmt_posts = mysqli_prepare($link, $sql_posts)) {
-                mysqli_stmt_bind_param($stmt_posts,"ss", $user_id, $user_id);
-
-                if (mysqli_stmt_execute($stmt_posts)) {
-                    $result_posts = mysqli_stmt_get_result($stmt_posts);
-
-                    while ($row = mysqli_fetch_assoc($result_posts)) {
-                        $post_user_id = $row["user_id"];
-                        $text_id = $row["text_id"];
-                        $post_user = $row["post_user"];
-                        $post_title = $row["title"];
-                        $post_content = $row["content"];
-                        $post_creation = $row["created_at"];
-
-                        echo "<p><div class='username_post'><a href='profile.php?username=$post_user'>$post_user</a></div> <strong><a href='posts.php?user_id=$post_user_id&text_id=$text_id'>$post_title</a></strong> ($post_creation)</p>";
-                    }
-
-                    mysqli_free_result($result_posts);
-                } else {
-                    echo "Error fetching posts: " . mysqli_error($link);
+    <div class="body">
+        <div id="profile-navbar">
+            <?php
+                if ($profile_image) {
+                    echo "<img src='$profile_image' alt='Profile picture'><br>";
                 }
-
-                mysqli_stmt_close($stmt_posts);
-            } else {
-                echo "Error preparing posts query: " . mysqli_error($link);
-            }
-            mysqli_close($link);
-        ?>
-    </p>
+                echo "<h2>$username</h2><br>";
+            ?>
+            <div id="navbar">
+                <p><a class="no-line-navbar" href="profile.php">Profile</a></p>
+                <p><a class="no-line-navbar" href="search.php">Search</a></p>
+                <p><a class="no-line-navbar" href="logout.php">Logout</a></p>
+            </div>
+        </div>
+        <div id="posts-dashboard">
+            <p>Create your own posts here!</p>
+            <div class=posting>
+                <form method="POST" action="upload_text.php">
+                    <div>
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" required>
+                    </div><br>
+                    <div>
+                        <label for="content">Post:</label><br>
+                        <textarea name="content" maxlength="512" required></textarea>
+                    </div><br>
+                    <div>
+                        <label for="is_public">Privacy:</label>
+                        <select name="is_public">
+                            <option value="public">Public</option>
+                            <option value="private">Private</option>
+                        </select>
+                    </div><br>
+                    <div>
+                        <label>Tags:</label>
+                        <input type="text" name="tags" value="<?php echo implode(', ', $tags); ?>"><br>
+                        <span>Enter tags separated by commas</span>
+                    </div><br>
+                    <div>
+                        <input type="submit" value="Post">
+                    </div>
+                </form>
+            </div>
+            <br>
+            <p>
+                <?php
+                    if ($stmt_posts = mysqli_prepare($link, $sql_posts)) {
+                        mysqli_stmt_bind_param($stmt_posts,"ss", $user_id, $user_id);
+                        if (mysqli_stmt_execute($stmt_posts)) {
+                            $result_posts = mysqli_stmt_get_result($stmt_posts);
+                            while ($row = mysqli_fetch_assoc($result_posts)) {
+                                $post_user_id = $row["user_id"];
+                                $text_id = $row["text_id"];
+                                $post_user = $row["post_user"];
+                                $post_title = $row["title"];
+                                $post_content = $row["content"];
+                                $post_creation = $row["created_at"];
+                                echo "<p><div class='username_post'><a href='profile.php?username=$post_user'>$post_user</a></div> <strong><a href='posts.php?user_id=$post_user_id&text_id=$text_id'>$post_title</a></strong> ($post_creation)</p>";
+                            }
+                            mysqli_free_result($result_posts);
+                        } else {
+                            echo "Error fetching posts: " . mysqli_error($link);
+                        }
+                        mysqli_stmt_close($stmt_posts);
+                    } else {
+                        echo "Error preparing posts query: " . mysqli_error($link);
+                    }
+                    mysqli_close($link);
+                ?>
+            </p>
+        </div>
+    </div>
 </body>
 </html>

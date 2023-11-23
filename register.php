@@ -78,9 +78,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $mail->Password = "kwpf vhea voyu gxto";
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587; 
-                $mail->setFrom("noreply@readerswriters.org","Readers and Writers");
+                $mail->setFrom("noreply@readerswriters.org","noreply");
                 $mail->addAddress($param_email, $param_username);
                 $mail->isHTML(true);
+                $activation_link = "activate.php?code=$activation_link";
                 $mail->Subject = "Confirmation";
                 $mail->Body = "Thank you for registering into our social media. We hope you enjoy your stay.";
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2023 a las 17:49:48
+-- Tiempo de generación: 23-11-2023 a las 15:33:49
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -41,7 +41,8 @@ CREATE TABLE `comments` (
 
 INSERT INTO `comments` (`comment_id`, `text_id`, `user_id`, `content`, `created_at`) VALUES
 (1, 2, 523, 'Your Instagram makes you seem so fun!', '2023-11-15 18:21:37'),
-(2, 2, 523, 'It’s really difficult to underestimate you.', '2023-11-15 18:22:14');
+(2, 2, 523, 'It’s really difficult to underestimate you.', '2023-11-15 18:22:14'),
+(3, 1, 526, 'So funny haha', '2023-11-23 12:58:33');
 
 -- --------------------------------------------------------
 
@@ -56,6 +57,15 @@ CREATE TABLE `follows` (
   `user_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `follows`
+--
+
+INSERT INTO `follows` (`follow_id`, `follower_id`, `following_id`, `user_id`, `created_at`) VALUES
+(10, 523, 526, NULL, '2023-11-23 09:27:07'),
+(16, 526, 0, NULL, '2023-11-23 12:57:53'),
+(21, 526, 523, NULL, '2023-11-23 13:32:36');
 
 -- --------------------------------------------------------
 
@@ -90,7 +100,8 @@ CREATE TABLE `texts` (
 INSERT INTO `texts` (`text_id`, `user_id`, `title`, `content`, `is_public`, `created_at`) VALUES
 (1, 523, 'buh2', 'post', 1, '2023-11-13 19:05:09'),
 (2, 523, 'buh3', 'brahhhhhhhhhhh', 1, '2023-11-14 18:58:50'),
-(4, 526, 'ptsd', 'post prueba', 1, '2023-11-22 14:38:49');
+(4, 526, 'ptsd', 'post prueba', 1, '2023-11-22 14:38:49'),
+(5, 523, 'office', 'Sometimes I’ll start a sentence and I don’t even know where it’s going. I just hope I find it along the way.', 1, '2023-11-23 08:32:51');
 
 -- --------------------------------------------------------
 
@@ -184,13 +195,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `follows`
 --
 ALTER TABLE `follows`
-  MODIFY `follow_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `follow_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `tags`
@@ -202,7 +213,7 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT de la tabla `texts`
 --
 ALTER TABLE `texts`
-  MODIFY `text_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `text_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `text_tags`
