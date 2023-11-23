@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         mysqli_stmt_bind_param($stmt, "sss", $user_id, $text_id, $comment_content);
 
         if (mysqli_stmt_execute($stmt)) {
-            header("Location: display_texts.php");
+            header("Location: posts.php");
             exit;
         } else {
             echo "Error executing comment query: " . mysqli_error($link);
