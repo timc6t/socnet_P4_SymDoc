@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-11-2023 a las 15:33:49
+-- Tiempo de generación: 23-11-2023 a las 19:59:18
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -42,7 +42,10 @@ CREATE TABLE `comments` (
 INSERT INTO `comments` (`comment_id`, `text_id`, `user_id`, `content`, `created_at`) VALUES
 (1, 2, 523, 'Your Instagram makes you seem so fun!', '2023-11-15 18:21:37'),
 (2, 2, 523, 'It’s really difficult to underestimate you.', '2023-11-15 18:22:14'),
-(3, 1, 526, 'So funny haha', '2023-11-23 12:58:33');
+(3, 5, 527, 'ppp', '2023-11-23 17:36:26'),
+(4, 4, 526, 'ppp', '2023-11-23 17:46:00'),
+(5, 4, 526, 'Comment test', '2023-11-23 17:47:57'),
+(6, 5, 526, 'nice', '2023-11-23 17:48:05');
 
 -- --------------------------------------------------------
 
@@ -63,9 +66,9 @@ CREATE TABLE `follows` (
 --
 
 INSERT INTO `follows` (`follow_id`, `follower_id`, `following_id`, `user_id`, `created_at`) VALUES
-(10, 523, 526, NULL, '2023-11-23 09:27:07'),
-(16, 526, 0, NULL, '2023-11-23 12:57:53'),
-(21, 526, 523, NULL, '2023-11-23 13:32:36');
+(1, 527, 523, NULL, '2023-11-23 17:35:08'),
+(2, 526, 523, NULL, '2023-11-23 17:39:02'),
+(3, 526, 527, NULL, '2023-11-23 17:41:56');
 
 -- --------------------------------------------------------
 
@@ -101,7 +104,7 @@ INSERT INTO `texts` (`text_id`, `user_id`, `title`, `content`, `is_public`, `cre
 (1, 523, 'buh2', 'post', 1, '2023-11-13 19:05:09'),
 (2, 523, 'buh3', 'brahhhhhhhhhhh', 1, '2023-11-14 18:58:50'),
 (4, 526, 'ptsd', 'post prueba', 1, '2023-11-22 14:38:49'),
-(5, 523, 'office', 'Sometimes I’ll start a sentence and I don’t even know where it’s going. I just hope I find it along the way.', 1, '2023-11-23 08:32:51');
+(5, 527, 'Fear', 'Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.', 1, '2023-11-23 17:36:11');
 
 -- --------------------------------------------------------
 
@@ -139,7 +142,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `activation_key`, `profile_image`, `is_activated`, `created_at`) VALUES
 (523, 'timc6t', 'tim.casiano7@gmail.com', '$2y$10$qQaUAmfGMm6dIZdra7.qF.YyHaWGDTOhFdwJgJQ80K2Zpqj5wPs.C', NULL, '', 0, '2023-11-08 18:57:17'),
-(526, 'hashedpwd', 'poketimy@gmail.com', '$2y$10$yKiLE221iy.J84vNl6fCYeONxL8h/1CHTtyomSQPq.CCHvk6IKckS', NULL, '', 0, '2023-11-22 14:29:45');
+(526, 'hashedpwd', 'poketimy@gmail.com', '$2y$10$yKiLE221iy.J84vNl6fCYeONxL8h/1CHTtyomSQPq.CCHvk6IKckS', NULL, '', 0, '2023-11-22 14:29:45'),
+(527, 'michael_scott', 'timtester74@gmail.com', '$2y$10$n/XVLhvd2rt.HFUgUIrECOOpU3U2ipN1Ar2pDbSkns4kR4IzsTEtW', NULL, '', 0, '2023-11-23 16:35:01');
 
 --
 -- Índices para tablas volcadas
@@ -195,13 +199,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `follows`
 --
 ALTER TABLE `follows`
-  MODIFY `follow_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `follow_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tags`
@@ -225,7 +229,7 @@ ALTER TABLE `text_tags`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=527;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=528;
 
 --
 -- Restricciones para tablas volcadas
