@@ -66,9 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!--Password recovery needs to be done-->
 
     <?php
-    if (!empty($error_message)){
-        echo "<p>$error_message</p>";
-    }
+        if (!empty($error_message)){
+            echo "<p>$error_message</p>";
+        }
     ?>
 
 </body>
