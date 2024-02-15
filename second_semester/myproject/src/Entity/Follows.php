@@ -10,11 +10,38 @@ class Follows
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: 'integer')]
+    private $followId;
 
-    public function getId(): ?int
-    {
-        return $this->id;
+    #[ORM\Column(type: 'integer')]
+    private $followerId;
+
+    #[ORM\Column(type: 'integer')]
+    private $followingId;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $userId;
+
+    #[ORM\Column(type: 'datetime')]
+    private $createdAt;
+
+    public function getFollowId() {
+        return $this->followId;
+    }
+
+    public function getFollowerId() {
+        return $this -> followerId;
+    }
+
+    public function setFollowerId(int $followerId) {
+        $this -> followerId = $followerId;
+    }
+
+    public function getFollowingId() {
+        return $this -> followingId;
+    }
+
+    public function setFollowingId($followingId) {
+        $this -> followingId = $followingId;
     }
 }
