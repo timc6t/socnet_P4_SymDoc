@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <form method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="{{ username }}" required>
+        {% if username_err %}
+            <p>{{ username_err }}</p>
+        {% endif %}<br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        {% if password_err %}
+            <p>{{ password_err }}</p>
+        {% endif %}<br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ email }}" required>
+        {% if email_err %}
+            <p>{{ email_err }}</p>
+        {% endif %}<br>
+
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>

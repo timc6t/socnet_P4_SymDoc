@@ -1,0 +1,96 @@
+/* In all pages */
+
+.body {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.no-line {
+    text-decoration: none;
+    color: darkslategray;
+}
+
+.no-line:hover {
+    background: powderblue;
+}
+
+.no-line:active {
+    background: lightblue;
+}
+
+/* login.php */
+
+#center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* register.php */
+
+
+/* dashboard.php */
+
+.posting {
+    border: 2px solid black;
+    width: 250px;
+}
+
+textarea { resize: vertical; }
+
+#posts-dashboard {
+    width: 80%;
+}
+
+/* profile.php */
+
+#profile-navbar {
+    flex: 1;
+}
+
+.no-line-navbar {
+    text-decoration: none;
+    color: darkslateblue
+}
+
+.no-line-navbar:hover {
+    background: blanchedalmond;
+}
+
+.no-line-navbar:active {
+    background: cornsilk;
+}
+
+#follows {
+    display: flex;
+    align-items: center;
+}
+
+#posts-profile {
+    width: 80%;
+}
+
+.indent {
+    margin-right: 5%;
+    margin-left: 20px;
+}
+
+/* follows.php */
+
+div {
+    margin: 20px;
+}
+
+#follows {
+    position: relative;
+    display: table-column;
+    width: 80%;
+}
+
+/* search.php */
+
+#results-search {
+    width: 80%;
+}

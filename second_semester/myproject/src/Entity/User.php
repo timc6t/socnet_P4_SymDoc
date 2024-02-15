@@ -2,141 +2,163 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
+#[ORM\Entity]
+#[ORM\Table(name: 'user')]
 class User
 {
     #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    private $id;
 
-    #[ORM\Column]
-    private ?int $user_id = null;
+    #[ORM\Column(type: 'integer')]
+    private $user_id;
 
-    #[ORM\Column(length: 50)]
-    private ?string $username = null;
+    #[ORM\Column(type: 'string', length: 50)]
+    private $username;
 
-    #[ORM\Column(length: 100)]
-    private ?string $email = null;
+    #[ORM\Column(type: 'string', length: 100)]
+    private $email;
 
-    #[ORM\Column(length: 255)]
-    private ?string $password = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    private $password;
 
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $activation_key = null;
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private $activation_key;
 
-    #[ORM\Column(length: 255)]
-    private ?string $profile_image = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    private $profile_image;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $is_activated = null;
+    private $is_activated;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $created_at = null;
+    private ?\DateTimeInterface $created_at;
 
-    public function getId(): ?int
-    {
+    /**
+     * User construct
+     */
+    public function __construct(){}
+
+    /**
+     * @return mixed
+     */
+    public function getId() {
         return $this->id;
     }
 
-    public function getUserId(): ?int
-    {
+    /**
+     * @return mixed
+     */
+    public function getUserId() {
         return $this->user_id;
     }
 
-    public function setUserId(int $user_id): static
-    {
+    /**
+     * @param mixed $user_id
+     */
+    public function setUserId($user_id) {
         $this->user_id = $user_id;
-
-        return $this;
     }
 
-    public function getUsername(): ?string
-    {
+    /**
+     * @return mixed
+     */
+    public function getUsername() {
         return $this->username;
     }
 
-    public function setUsername(string $username): static
-    {
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username) {
         $this->username = $username;
-
-        return $this;
     }
 
-    public function getEmail(): ?string
-    {
+    /**
+     * @return mixed
+     */
+    public function getEmail() {
         return $this->email;
     }
 
-    public function setEmail(string $email): static
-    {
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email) {
         $this->email = $email;
-
-        return $this;
     }
 
-    public function getPassword(): ?string
-    {
+    /**
+     * @return mixed
+     */
+    public function getPassword() {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
-    {
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password) {
         $this->password = $password;
-
-        return $this;
     }
 
-    public function getActivationKey(): ?string
-    {
+    /**
+     * @return mixed
+     */
+    public function getActivationKey() {
         return $this->activation_key;
     }
 
-    public function setActivationKey(?string $activation_key): static
-    {
+    /**
+     * @param mixed $activation_key
+     */
+    public function setActivationKey($activation_key) {
         $this->activation_key = $activation_key;
-
-        return $this;
     }
 
-    public function getProfileImage(): ?string
-    {
+    /**
+     * @return mixed
+     */
+    public function getProfileImage() {
         return $this->profile_image;
     }
 
-    public function setProfileImage(string $profile_image): static
-    {
+    /**
+     * @param mixed $profile_image
+     */
+    public function setProfileImage($profile_image) {
         $this->profile_image = $profile_image;
-
-        return $this;
     }
 
-    public function getIsActivated(): ?int
-    {
+    /**
+     * @return mixed
+     */
+    public function getIsActivated() {
         return $this->is_activated;
     }
 
-    public function setIsActivated(int $is_activated): static
-    {
+    /**
+     * @param mixed $is_activated
+     */
+    public function setIsActivated($is_activated) {
         $this->is_activated = $is_activated;
-
-        return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt(): ?\DateTimeInterface {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): static
-    {
+    /**
+     * @param mixed $created_at
+     */
+    public function setCreatedAt(\DateTimeInterface $created_at) {
         $this->created_at = $created_at;
-
-        return $this;
     }
 }
